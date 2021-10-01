@@ -23,6 +23,7 @@ using API.Extensions;
 
 namespace API
 {
+    // The Startup class configures services and the app's request pipeline. 
     public class Startup
     {
         private readonly IConfiguration _config;
@@ -36,6 +37,8 @@ namespace API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // A service is a reusable component that provides app functionality. 
+        // Services are registered in ConfigureServices and consumed across the app via dependency injection (DI) or ApplicationServices.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_config);
@@ -50,6 +53,8 @@ namespace API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // The Configure method is used to specify how the app responds to HTTP requests.
+        // The request pipeline is configured by adding middleware components to an IApplicationBuilder instance.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
