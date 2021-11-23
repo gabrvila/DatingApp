@@ -33,6 +33,19 @@ export class AccountService {
     this.currentUserSource.next(user);
   }
 
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((response) => {
+        const user = response as User;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+          //return user;
+      })
+    )
+  }
+
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null!);
