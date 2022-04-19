@@ -45,11 +45,11 @@ namespace API.Controllers
         }
 
         
-        [HttpGet("{username}")]
-        public async Task<ActionResult<MemberDto>> GetMembersAsync(string username)
-        {
-            var users = await _userRepository.GetMembersAsync();
-            return Ok(users);
-        }
+        // [HttpGet("{username}")]
+        // public async Task<ActionResult<MemberDto>> GetMembersAsync(string username)
+        // {
+        //     var users = await _userRepository.GetMembersAsync();
+        //     return Ok(users);
+        // }
     }
 }
