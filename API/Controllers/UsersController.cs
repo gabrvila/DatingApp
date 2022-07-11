@@ -1,3 +1,8 @@
+using System.Buffers.Text;
+using System.Security.Claims;
+using System;
+using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Threading.Tasks.Dataflow;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +50,19 @@ namespace API.Controllers
         }
 
         
-        // [HttpGet("{username}")]
-        // public async Task<ActionResult<MemberDto>> GetMembersAsync(string username)
-        // {
-        //     var users = await _userRepository.GetMembersAsync();
-        //     return Ok(users);
-        // }
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            _mapper.Map(memberUpdateDto, user);
+
+            _userRepository.Update(user);
+
+           if (await _userRepository.SaveAllAsync()) return NoContent();
+
+           return BadRequest("Failed to update user");
+        }
     }
 }
